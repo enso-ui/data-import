@@ -1,7 +1,8 @@
 <template>
     <div class="is-flex">
         <a class="button is-info mr-2"
-            :href="templateLink">
+            :href="templateLink"
+            v-if="template">
             <span>{{ i18n('Template') }}</span>
             <span class="icon is-small">
                 <fa icon="download"/>
@@ -17,15 +18,19 @@
             ref="uploader">
             <template #control="{ controlEvents }"
                 v-if="!hasErrors">
-                <a :class="['button is-success', { 'is-loading': loading }]"
-                    v-on="controlEvents">
-                    <slot>
-                        <span>{{ i18n('Import') }}</span>
-                        <span class="icon is-small">
-                            <fa icon="upload"/>
-                        </span>
-                    </slot>
-                </a>
+                <slot name="control"
+                    :control-events="controlEvents">
+                    <a :class="['button is-success', { 'is-loading': loading }]"
+                        v-on="controlEvents"
+                        v-if="!invisible">
+                        <slot>
+                            <span>{{ i18n('Import') }}</span>
+                            <span class="icon is-small">
+                                <fa icon="upload"/>
+                            </span>
+                        </slot>
+                    </a>
+                </slot>
             </template>
         </enso-uploader>
         <Summary :summary="summary"
@@ -51,6 +56,10 @@ export default {
     inject: ['canAccess', 'http', 'i18n', 'route'],
 
     props: {
+        invisible: {
+            type: Boolean,
+            default: false,
+        },
         fileSizeLimit: {
             type: Number,
             default: 100 * 1000 * 1000,
@@ -63,6 +72,10 @@ export default {
         path: {
             type: String,
             required: true,
+        },
+        template: {
+            type: Boolean,
+            default: false,
         },
     },
 

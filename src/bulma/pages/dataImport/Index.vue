@@ -18,7 +18,8 @@
                 </div>
                 <div class="column"/>
                 <div class="column is-narrow">
-                    <import-uploader :path="importLink"
+                    <import-uploader template
+                        :path="importLink"
                         :params="uploadParams"
                         @upload-successful="$refs.imports.fetch()"/>
                 </div>
