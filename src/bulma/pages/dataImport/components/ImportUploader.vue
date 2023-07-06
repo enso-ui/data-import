@@ -19,7 +19,8 @@
             <template #control="{ controlEvents }"
                 v-if="!hasErrors">
                 <slot name="control"
-                    :control-events="controlEvents">
+                    :control-events="controlEvents"
+                    :loading="loading">
                     <a :class="['button is-success', { 'is-loading': loading }]"
                         v-on="controlEvents"
                         v-if="!invisible">
