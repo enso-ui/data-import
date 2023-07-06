@@ -24,12 +24,10 @@
                     <a :class="['button is-success', { 'is-loading': loading }]"
                         v-on="controlEvents"
                         v-if="!invisible">
-                        <slot>
-                            <span>{{ i18n('Import') }}</span>
-                            <span class="icon is-small">
-                                <fa icon="upload"/>
-                            </span>
-                        </slot>
+                        <span>{{ i18n('Import') }}</span>
+                        <span class="icon is-small">
+                            <fa icon="upload"/>
+                        </span>
                     </a>
                 </slot>
             </template>
