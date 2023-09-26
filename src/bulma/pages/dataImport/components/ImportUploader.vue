@@ -16,8 +16,7 @@
             @upload-error="loading = false"
             @upload-successful="uploaded"
             ref="uploader">
-            <template #control="{ controlEvents }"
-                v-if="!hasErrors">
+            <template #control="{ controlEvents }">
                 <slot name="control"
                     :control-events="controlEvents"
                     :loading="loading">
