@@ -25,9 +25,18 @@
                 </div>
             </template>
         </div>
+        <div class="columns is-centered">
+            <div class="column is-narrow">
+                <enso-date-filter class="box raises-on-hover"
+                    compact
+                    v-model:filter="dateFilter"
+                    v-model:interval="intervals.data_imports.created_at"/>
+            </div>
+        </div>
         <enso-table class="box is-paddingless raises-on-hover"
             id="dataImports"
             :filters="filters"
+            :intervals="intervals"
             @download-rejected="rejected"
             ref="imports">
             <template #type="{ column, row }">
@@ -63,8 +72,11 @@
     </div>
 </template>
 
-<script>
-import { mapState } from 'vuex';
+<script setup>
+import {
+    inject, ref, computed, onBeforeMount, reactive,
+} from 'vue';
+import { useStore } from 'vuex';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faDownload, faTrashAlt, faFileExcel, faBan, faSync,
@@ -72,66 +84,57 @@ import {
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import { Avatar } from '@enso-ui/users';
+import { EnsoDateFilter } from '@enso-ui/filters/bulma';
 import ImportUploader from './components/ImportUploader.vue';
 import Param from './components/Param.vue';
 
 library.add(faDownload, faTrashAlt, faFileExcel, faBan, faSync);
 
-export default {
-    name: 'Index',
+const canAccess = inject('canAccess');
+const errorHandler = inject('errorHandler');
+const http = inject('http');
+const route = inject('route');
 
-    components: {
-        Avatar,
-        EnsoSelect,
-        EnsoTable,
-        ImportUploader,
-        Param,
-    },
+const dateFilter = ref('all');
 
-    inject: ['canAccess', 'errorHandler', 'http', 'i18n', 'route'],
-
-    data: () => ({
-        type: null,
-        params: [],
-        options: [],
-    }),
-
-    computed: {
-        ...mapState(['enums']),
-        filters() {
-            return { data_imports: { type: this.type } };
-        },
-        importLink() {
-            return this.canAccess('import.store')
-                && this.type
-                && this.route('import.store');
-        },
-        uploadParams() {
-            return this.params.reduce((params, param) => {
-                params[param.name] = param.value;
-                return params;
-            }, { type: this.type });
+const intervals = reactive({
+    data_imports: {
+        created_at: {
+            max: null,
+            min: null,
         },
     },
+});
 
-    created() {
-        this.http.get(this.route('import.options'))
-            .then(({data}) => (this.options = data))
-            .catch(this.errorHandler);
-    },
+const type = ref(null);
+const params = ref([]);
+const options = ref([]);
+const store = useStore();
 
-    methods: {
-        template() {
-            this.http.get(this.route('import.show', this.type))
-                .then(({ data: { params } }) => (this.params = params))
-                .catch(error => {
-                    this.type = null;
-                    this.errorHandler(error);
-                });
-        },
-        rejected({ rejected: { id } }) {
-            window.location.href = this.route('import.rejected', id);
-        },
-    },
-};
+const { enums } = store.state;
+
+const filters = computed(() => ({ data_imports: { type: type.value } }));
+
+const importLink = computed(() => canAccess('import.store')
+    && type.value
+    && route('import.store'));
+
+const uploadParams = computed(() => params.value.reduce((params, param) => {
+    params[param.name] = param.value;
+    return params;
+}, { type: type.value }));
+
+onBeforeMount(() => http.get(route('import.options'))
+    .then(({ data }) => (options.value = data))
+    .catch(errorHandler));
+
+const template = () => http.get(route('import.show', type.value))
+    .then(({ data: { params } }) => (params.value = params))
+    .catch(error => {
+        type.value = null;
+        errorHandler(error);
+    });
+
+const rejected = ({ rejected: { id } }) => (window.location.href = route('import.rejected', id));
+
 </script>
