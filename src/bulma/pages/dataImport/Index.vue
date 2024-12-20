@@ -129,7 +129,7 @@ onBeforeMount(() => http.get(route('import.options'))
     .catch(errorHandler));
 
 const template = () => http.get(route('import.show', type.value))
-    .then(({ data: { params } }) => (params.value = params))
+    .then(({ data }) => (params.value = data.params))
     .catch(error => {
         type.value = null;
         errorHandler(error);
