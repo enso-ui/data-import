@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import { Datepicker } from '@enso-ui/datepicker/bulma';
+import { useStore } from '../../../../../utils/pinia';
 
 export default {
     name: 'Date',
@@ -24,7 +24,9 @@ export default {
     },
 
     computed: {
-        ...mapState(['meta']),
+        meta() {
+            return useStore('app').meta;
+        },
         dateFormat() {
             return this.param.meta?.dateFormat
                 ?? this.meta.dateFormat;

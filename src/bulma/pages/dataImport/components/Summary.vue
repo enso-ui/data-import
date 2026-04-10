@@ -2,12 +2,12 @@
     <modal>
         <div class="box">
             <p class="title is-4 has-text-centered">
-                <fa icon="exclamation-triangle"/>
+                <fa :icon="faTriangleExclamation"/>
                 {{ i18n('Structure Errors') }}
             </p>
             <div v-for="(errors, category) in summary.errors"
                 :key="category">
-                <p class="title is-6 has-text-centered is-marginless">
+                <p class="title is-6 has-text-centered m-0">
                     {{ category }}:
                 </p>
                 <div class="tags is-centered py-3">
@@ -24,11 +24,8 @@
 
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from '@enso-ui/modal/bulma';
-
-library.add(faExclamationTriangle);
 
 export default {
     name: 'Summary',
@@ -43,5 +40,9 @@ export default {
             required: true,
         },
     },
+
+    data: () => ({
+        faTriangleExclamation,
+    }),
 };
 </script>

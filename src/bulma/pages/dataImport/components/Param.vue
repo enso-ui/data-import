@@ -16,15 +16,11 @@
 </template>
 
 <script>
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import { ucfirst } from '@enso-ui/strings';
 import Checkbox from './params/Checkbox.vue';
 import Input from './params/Input.vue';
 import Date from './params/Date.vue';
 import Select from './params/Select.vue';
-
-library.add(faFilter);
 
 export default {
     name: 'Param',

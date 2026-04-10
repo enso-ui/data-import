@@ -5,7 +5,7 @@
             v-if="template">
             <span>{{ i18n('Template') }}</span>
             <span class="icon is-small">
-                <fa icon="download"/>
+                <fa :icon="faDownload"/>
             </span>
         </a>
         <enso-uploader :url="path"
@@ -25,7 +25,7 @@
                         v-if="!invisible">
                         <span>{{ i18n('Import') }}</span>
                         <span class="icon is-small">
-                            <fa icon="upload"/>
+                            <fa :icon="faUpload"/>
                         </span>
                     </a>
                 </slot>
@@ -39,12 +39,9 @@
 
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { EnsoUploader } from '@enso-ui/uploader/bulma';
 import Summary from './Summary.vue';
-
-library.add(faUpload);
 
 export default {
     name: 'ImportUploader',
@@ -80,6 +77,8 @@ export default {
     emits: ['upload-successful'],
 
     data: () => ({
+        faDownload,
+        faUpload,
         loading: false,
         summary: null,
     }),

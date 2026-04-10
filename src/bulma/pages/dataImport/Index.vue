@@ -27,20 +27,20 @@
         </div>
         <div class="columns is-centered">
             <div class="column is-narrow">
-                <enso-date-filter class="box raises-on-hover"
+                <enso-date-filter class="box"
                     compact
                     v-model:filter="dateFilter"
                     v-model:interval="intervals.data_imports.created_at"/>
             </div>
         </div>
-        <enso-table class="box is-paddingless raises-on-hover"
+        <enso-table class="box p-0"
             id="dataImports"
             :filters="filters"
             :intervals="intervals"
             @download-rejected="rejected"
             ref="imports">
             <template #type="{ column, row }">
-                <span class="tag is-table-tag is-info">
+                <span class="tag is-info">
                     {{ column.enum._get(row.type) }}
                 </span>
             </template>
@@ -60,7 +60,7 @@
                 </strong>
             </template>
             <template #status="{ column, row }">
-                <span :class="['tag is-table-tag', enums.importCssClasses._get(row.status)]">
+                <span :class="['tag', enums.importCssClasses._get(row.status)]">
                     {{ column.enum._get(row.status) }}
                 </span>
             </template>
@@ -76,19 +76,14 @@
 import {
     inject, ref, computed, onBeforeMount, reactive,
 } from 'vue';
-import { useStore } from 'vuex';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-    faDownload, faTrashAlt, faFileExcel, faBan, faSync,
-} from '@fortawesome/free-solid-svg-icons';
+import { storeToRefs } from 'pinia';
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import { Avatar } from '@enso-ui/users';
 import { EnsoDateFilter } from '@enso-ui/filters/bulma';
 import ImportUploader from './components/ImportUploader.vue';
 import Param from './components/Param.vue';
-
-library.add(faDownload, faTrashAlt, faFileExcel, faBan, faSync);
+import { useStore } from '../../../utils/pinia';
 
 const canAccess = inject('canAccess');
 const errorHandler = inject('errorHandler');
@@ -109,9 +104,7 @@ const intervals = reactive({
 const type = ref(null);
 const params = ref([]);
 const options = ref([]);
-const store = useStore();
-
-const { enums } = store.state;
+const { enums } = storeToRefs(useStore('enums'));
 
 const filters = computed(() => ({ data_imports: { type: type.value } }));
 
