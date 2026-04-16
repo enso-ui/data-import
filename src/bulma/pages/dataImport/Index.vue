@@ -77,13 +77,13 @@ import {
     inject, ref, computed, onBeforeMount, reactive,
 } from 'vue';
 import { storeToRefs } from 'pinia';
+import { enums as useEnums } from '@enso-ui/enums/src/pinia/enums';
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import { Avatar } from '@enso-ui/users';
 import { EnsoDateFilter } from '@enso-ui/filters/bulma';
 import ImportUploader from './components/ImportUploader.vue';
 import Param from './components/Param.vue';
-import { useStore } from '../../../utils/pinia';
 
 const canAccess = inject('canAccess');
 const errorHandler = inject('errorHandler');
@@ -104,7 +104,7 @@ const intervals = reactive({
 const type = ref(null);
 const params = ref([]);
 const options = ref([]);
-const { enums } = storeToRefs(useStore('enums'));
+const { enums } = storeToRefs(useEnums());
 
 const filters = computed(() => ({ data_imports: { type: type.value } }));
 
