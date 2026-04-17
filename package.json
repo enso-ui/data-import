@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/data-import",
-  "version": "5.6.7",
+  "version": "5.6.8",
   "description": "Basic Data Import package",
   "main": "src/bulma/pages/dataImport/Index.vue",
   "repository": {
