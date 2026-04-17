@@ -7,7 +7,7 @@
 
 <script>
 import { Datepicker } from '@enso-ui/datepicker/bulma';
-import { app as useApp } from '@enso-ui/ui/src/pinia/app';
+import { app } from '@enso-ui/ui/src/pinia/app';
 
 export default {
     name: 'Date',
@@ -25,7 +25,7 @@ export default {
 
     computed: {
         meta() {
-            return useApp().meta;
+            return app().meta;
         },
         dateFormat() {
             return this.param.meta?.dateFormat

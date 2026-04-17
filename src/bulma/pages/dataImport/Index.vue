@@ -62,7 +62,7 @@
                 </strong>
             </template>
             <template #status="{ column, row }">
-                <span :class="['tag', enums.importCssClasses._get(row.status)]">
+                <span :class="['tag', enumStore.importCssClasses._get(row.status)]">
                     {{ column.enum._get(row.status) }}
                 </span>
             </template>
@@ -79,7 +79,7 @@ import {
     inject, ref, computed, onBeforeMount, reactive,
 } from 'vue';
 import { storeToRefs } from 'pinia';
-import { enums as useEnums } from '@enso-ui/enums/src/pinia/enums';
+import { enums } from '@enso-ui/enums/src/pinia/enums';
 import { EnsoTable } from '@enso-ui/tables/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import { Avatar } from '@enso-ui/users';
@@ -106,7 +106,7 @@ const intervals = reactive({
 const type = ref(null);
 const params = ref([]);
 const options = ref([]);
-const { enums } = storeToRefs(useEnums());
+const { enums: enumStore } = storeToRefs(enums());
 
 const filters = computed(() => ({ data_imports: { type: type.value } }));
 
