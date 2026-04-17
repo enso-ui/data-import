@@ -1,6 +1,6 @@
 <template>
     <div class="is-flex">
-        <a class="button is-info mr-2"
+        <a class="button mr-2"
             :href="templateLink"
             v-if="template">
             <span>{{ i18n('Template') }}</span>
@@ -20,7 +20,7 @@
                 <slot name="control"
                     :control-events="controlEvents"
                     :loading="loading">
-                    <a :class="['button is-success', { 'is-loading': loading }]"
+                    <a :class="['button is-dark', { 'is-loading': loading }]"
                         v-on="controlEvents"
                         v-if="!invisible">
                         <span>{{ i18n('Import') }}</span>

@@ -1,13 +1,13 @@
 <template>
-    <div class="field is-horizontal">
-        <div class="field-label is-normal"
+    <div class="level">
+        <div class="level-item is-flex-grow-0"
             v-if="param.label">
-            <label class="label">
+            <label class="label has-text-weight-bold">
                 {{ i18n(param.label) }}
             </label>
         </div>
-        <div class="field-body">
-            <div class="field">
+        <div class="level-item">
+            <div class="box p-1 is-flex-grow-1">
                 <component :is="component"
                     :param="param"/>
             </div>

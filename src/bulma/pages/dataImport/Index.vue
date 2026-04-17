@@ -2,10 +2,12 @@
     <div class="wrapper">
         <div class="columns is-variable is-2 is-mobile is-multiline">
             <div class="column is-3-desktop is-half-touch">
-                <enso-select v-model="type"
-                    :options="options"
-                    placeholder="Import Type"
-                    @update:model-value="type ? template() : null"/>
+                <div class="box p-1">
+                    <enso-select v-model="type"
+                        :options="options"
+                        placeholder="Import Type"
+                        @update:model-value="type ? template() : null"/>
+                </div>
             </div>
             <template v-if="type">
                 <div v-for="param in params"
