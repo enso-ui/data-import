@@ -1,7 +1,7 @@
 {
   "name": "@enso-ui/data-import",
   "version": "5.6.8",
-  "description": "Basic Data Import package",
+  "description": "Data-import dashboard and upload workflow for Enso UI.",
   "main": "src/bulma/pages/dataImport/Index.vue",
   "repository": {
     "type": "git",
